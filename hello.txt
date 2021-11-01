@@ -35,3 +35,11 @@ while(! feof($fn))  {
 }
 fclose($fn);
 ?>
+
+https://www.windows-commandline.com/add-user-from-command-line/
+https://en.wikiversity.org/wiki/Net_(command)/Localgroup
+https://medium.com/@esnesenon/feature-not-bug-dnsadmin-to-dc-compromise-in-one-line-a0f779b8dc83
+http://www.labofapenetrationtester.com/2017/05/abusing-dnsadmins-privilege-for-escalation-in-active-directory.html
+https://medium.com/techzap/dns-admin-privesc-in-active-directory-ad-windows-ecc7ed5a21a2
+https://blobscdn.gitbook.com/v0/b/gitbook-28427.appspot.com/o/assets%2F-LFEMnER3fywgFHoroYn%2F-LR2p6cFXrtS2pqrKTsc%2F-LR2pCB0IsoJbKE_SZye%2FScreenshot%20from%202018-11-11%2017-30-47.png?alt=media&token=4f52e671-fe5b-4dad-87b6-438c232188a2
+https://www.semperis.com/blog/dnsadmins-revisited/
